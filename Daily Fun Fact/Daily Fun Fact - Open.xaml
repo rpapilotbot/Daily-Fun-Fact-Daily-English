@@ -1,0 +1,109 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Daily_Fun_Fact___Open" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_DailyFunFactWebsiteUrl" Type="InArgument(x:String)" />
+  </x:Members>
+  <this:Daily_Fun_Fact___Open.in_DailyFunFactWebsiteUrl>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Daily_Fun_Fact___Open.in_DailyFunFactWebsiteUrl>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1153.33333333333,722</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Daily_Fun_Fact___Open_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Reflection</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Opens Daily Fun Fact website" DisplayName="Daily_Fun_Fact___Open" sap:VirtualizedContainerService.HintSize="476,657.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log Message - Start Open Daily Fun Fact website" sap:VirtualizedContainerService.HintSize="434,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started opening daily fun fact website&quot;]" />
+    <uix:NApplicationCard WebDriverMode="{x:Null}" sap2010:Annotation.AnnotationText="Opens Daily Fun Fact website" AttachMode="ByInstance" CloseMode="Never" DisplayName="Daily Fun Fact Website" sap:VirtualizedContainerService.HintSize="434,265.333333333333" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" ScopeGuid="49c77cca-5f66-483a-a868-0c2233f155f0" Version="V2">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="-11, -11, 1942, 1030" BrowserType="Chrome" IconBase64="iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAsHSURBVHhe7Z1pUBNZHsCpnS9b82Gqtmo/bNWuR7kjOEPnQMSddZzSrfFAAQ9uwiUQ7jMgCAgeo+t4rDoIKt4KtaPlOLqiIjoIHuigqOiMikgYOeRKEJIAuTrp7P+FgIiNmg4wbeW9ql+V6ff6mfr/6p39mth4hNk/9QgjZIABM65QgBx45B5GHAIPHu4h0z4BIbSFMeNPF0gpwULYBYWFsIwBIXqgG2j2FBJ1wDPMmFEHcW4yxRvF/Q0hHV7hxHGfKCLBL47jFiTifhGczJ2BGSNEnC/84wgXiHeiVwTxX4i/FEADfL8QyAgLWcnlhWfwbDHjS0gqlwvxj/cQEmima5RiQ1cQM34I03nTfGMIf5CBujEshA2EpnHtvcLtj2AhLMI3mggBIToshCUIYjnLQEgnFsISBLHEEhDSgYWwBCyEZWAhLAMLYRmjIcQOFjUOwnS+EzDTGglL5zsKM3if0cTGbCwWIlzFmxWe5hAMhFoxIcI0nnN4uuVSLBViB0LmwReKsnaEaXxf6CkImhiZxSgI4WMhQFga3w8LYRFYCMvAQlgGFsIysBCWgYWwDCyEZWAhLMMqhYSl8uNDkvlpoSl8EXyOHp7/e2J1QlaIeOk+UZzLXuGcOq8Izn1BLHdf2Ep+AuSxQoxVCRGmOsT4RnNOwRfVAOggGeUpJGQ+kcSVoATetyif7r7xxKqEQEtI9I7k3DTJGAoS89I3iiiCFpT1e4qxMiEOSMitYTKGovUKJ8SCGG4BjC/JcM+4d2NYCD0qbxhfAuK530Griqera6zAQt6GkFBA+RtBibwN0I2Nixgs5N3oPMOJJpgM/IimynT1jiZYyPtDgphaQRw33zRNpv0/LAULMRfoxgSxnKN09Y8GWIj5UDDg36GrfzTAQsxH6xvFuUBX/2iAhZiHEu6/GZzEy6arfzTAQt4PEhaMzwWx3MOwYEyBusZswYiFvB2dp5Bo9YvhnAgR8TLo6hxtsJCRMC0KA/s3HWPp6hsLsJDhCAmlVwTxa0A8dyfajKSrZyzBQl6BNhafwThxyLSxSFvHWGNVQtB+lE8Upxy+6OCL9QgYJ6Q+UUQJmj2NZ/dEx4CQ/O9Tncp+PuFy636Re8m1Iwu3HQjj08RtRD4IIYjABO42aAmN8GVV6OGUcZxI5G0UpvLj6MqPJ1EZM6P3Fq5c2dIuztNoVQ90OrJZpyfbSJ22Qa3pq+qWdxyta7ifgETtP75qZsL62dNoYmnkgxGCHj5BS1gPXdMBGLC3Qzc2ZvtS5oBknDi7bbu8p7OBoijSQJ/0kKdBkpSqnrLO7tY99Y0Pk4pK87/efjDCIX3Los8jMh2MMf1ghLCVvKOitV2ydjEEnTJGXq/XSaQSRUNjg0LRo5CPIInUU3oZSWrEvX2yC22S55urH5cFnLmcOzckeeZyLIQhqRsXJNbW3y2FoOshyJRMJlPt2ZvfFyIMV/gK/BXRcXHyDZs29RSdO9ciFot7Xr58qSbBQr+T1xMIkmtJ9dO2joaq42d2KbEQBuwpWLkeuiApCqhSqST37tsnX+y2lJrvvNgwwIJFLpTLkmWkp7cvmZAkerk3f9/LsvLy3ubmZqlardZCi0Ity9i6UAK5Bq1Ww/hPa1i1kEvXCg/AAK5GgXxaWyPz8w/UDJUxEq5Ll2kFgUHKRFGy6lhhYVvl7UpZ84sXShCkRE5QfVgIA+5Ul5yEIUOLAni94ppkmYenlk7Au0CtyC8gULEqM1ORv3+/qrTskh4LYcD126cLYOZkHBNuV1VKlnt6MxIyFGdXN2q5pyeFhTDgTEleDqw1VEhInfiZ3NtPoKMLMhOwEAbsKUhZBwtBORLS3t6uDwhe8V5jyPuAhTBgx/7I1YrerhdICEx5tSlpaZ10wWUCFsKADTmCNEln0yMkRKVSqbfv3PmCLrhMwEIYkLHZVdT44snPSAha8B0rKGijCy4TmAqxDVvF+yd8uUBghbURl/1lWI34ThESgrZI/ne2SE4XXCYwFgKgPz7DA6ZbI8+bH20GHcb9qusVFepFrktIugCbiyVCrBpxQ3UCRekVSMiTmpoudy/vProAmwsWwpB7j34SwOKwAwmRSCVSmPr20AXYXLAQhhRfPTQfPYhCQtRqtSwiOkZJF2Bz8Avwx0KYkleYNANtmyMhMLBr45NEFo8hGVmZWAhT1uxYRihVPeVICEob/r2pmy7I5rBwsSsWwpT0rYvs5T2dx00+DMcKC5sXLHKhDbQ5YCEMSd4497OOzsbtJh+GSz9dbkTb6XRBNgcshCGxa/5h91vTLykmH4b7D6q7Fi5+vxbi7OKmc3Zxpd0hxkIYEpHBt61+Uh4wsDisffaMfN/FYcbqrPbV2Wu6QIx+eJ6NfwJnLoYZJ8/vCidJTTcS0tLSovELCHznWgSk6dGj27a2tp5VmZk9w8cdGw8hUYNhRkKWW31re4PxUa60U6KPSYh5ZwuJiovRS6TtespAGZpfNJHxSYnUUCn4V9osIFQ0x/C0rhr5MCh6ZIbM7IzXgj+cRa5uhpy8HAOp6z+yhU6aVFbdMggjIwbLYCEW4BPpYKi8X2oMrpbUGLb8Z+trAobj7ednqLp321h+IOn0OsNtkBIUssJYBglRYJhTev2URq9H5+UMhkNHDlMwUL8hYoCstVlUd3eXsSyp05Igw9jdofuvlJciYZSNTzQRgWFO9eMbP0JAjSdQLlws7l6y3J32BAqa6p67cF6p0+mM56+kXa3Xm1pqv4duy3hYQqPRUMUlF3vxtNdC6pt+SUbHQVFQn9Y+lfgI/GkPPASHhvVJpBLjjAxt29c3PRTtOho3vVvecRik9KHrkBify8KYQO+D6PRkK4qmXKHQrF6zRjF8KotW8Lm7d3eip4uonFarfny6JGcuuv/Uxe/mKHq7TqMNSpSHhVjIgRPpM/uU8mIUTAgqJa6v70lOTet1WbLUuOhzW+auXbNuvbRDIjE+zELFpF0tu1O/nf85uj9y9XTbE+e2fqVUKcpQHhZiIWgL5UHN1SCdrr+VoNQt61bfvHVLc764WF51964SJVMWhVrHxWtHFkRk8gfrQO+IXCg/OA+kXMFCRoGMrYvtWyW/bYSxwTiWmBJqMDrTv40JvReCHv0mffPVG29SxWTPtLta+YPboJDINK5deuC0WWvdpzqbiyjC3mFo5dbIuu88OOLGB0kqdW+FXq9Dg3f/XNhA6eCztFcpL7l576z7yk1fv/XHXwaFJMbac3fMnrw712lSm5m0bFowJXRopdZK1GpHO5g5Of5aWxHS3Fab3SZ9vrmppSYTPX/fkOvLHdpNjcQrIdH2vJ2zJhfmzZhkMBP95nlToodWikHjAt828ZuRX/IcCSyEZWAhLAMLYRlYCMvAQlgGFsIybLzCiR8QvqH2p9fO+3sdTcDfBZWw3PbmQD0Yyxh8YugdYm/IcP6ULuBvJReI9Jz2xtM0DDOwEJaBhKgQIESVsfBTki7oAJXrNElHc90kxA79voexHoxl2LiHEkkI3yD7tI1zptygCbo2x2lSxZYvJx/a5TTpIXzWD8unUhZPPThQD8YybAZSnuPEjyG4eUMCjQJfB9ez86ZP+Msup4l/yHWcMBU+58P1ToB6VW7iUlM1OI1WGiZEA1yCa//Kc5zw8T7H/jKH7P5skztj4p+gmwqF/AcAkoaFjEUyCnGcmAsBFkPQM3MdJ/71pClveNo1fdJHIIEAMQVQXoqFjEECAX8E/EDK7P38v31kuvzWBGI+ASHB0IqcTJdwsijZ2Pwf7Pzgj1wFCYsAAAAASUVORK5CYII=" InformativeScreenshot="a283de442142f92460ff0dff117ae6c3.png" Selector="&lt;html app='chrome.exe' title='Daily Fun Facts for Teachers &amp;amp; Students | Be a Great Teacher' /&gt;" Url="[in_DailyFunFactWebsiteUrl]" />
+      </uix:NApplicationCard.TargetApp>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </uix:NApplicationCard>
+    <ui:LogMessage DisplayName="Log Message - Ended Open Daily Fun Fact website" sap:VirtualizedContainerService.HintSize="434,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Ended opening daily fun fact website&quot;]" />
+  </Sequence>
+</Activity>

@@ -1,21 +1,16 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="English_Words_Extraction" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="English_Words_Extraction" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_EnglishTamilSentencesInputExcelPath" Type="InArgument(x:String)" />
     <x:Property Name="in_QueueName" Type="InArgument(x:String)" />
+    <x:Property Name="in_EnglishSentencesPageUrl" Type="InArgument(x:String)" />
   </x:Members>
-  <this:English_Words_Extraction.in_EnglishTamilSentencesInputExcelPath>
-    <InArgument x:TypeArguments="x:String" />
-  </this:English_Words_Extraction.in_EnglishTamilSentencesInputExcelPath>
-  <this:English_Words_Extraction.in_QueueName>
-    <InArgument x:TypeArguments="x:String" />
-  </this:English_Words_Extraction.in_QueueName>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1153.33333333333,2231.33333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1153.33333333333,1577.33333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>English_Words_Extraction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="76">
+    <scg:List x:TypeArguments="x:String" Capacity="39">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -58,7 +53,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="66">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="35">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -93,235 +88,361 @@
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="English_Words_Extraction" sap:VirtualizedContainerService.HintSize="638,2166.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="English_Words_Extraction" sap:VirtualizedContainerService.HintSize="552,1512.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Int32" Name="counter">
+      <Variable x:TypeArguments="x:Int32" Default="0" Name="counter" />
+      <Variable x:TypeArguments="sd:DataTable" Name="TamilEnglishDT" />
+      <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractedDataTable" />
+      <Variable x:TypeArguments="s:String[]" Default="[{}]" Name="TamilSentencesArray" />
+      <Variable x:TypeArguments="s:String[]" Default="[{}]" Name="EnglishSentencesArray" />
+      <Variable x:TypeArguments="x:String" Name="referenceDate">
         <Variable.Default>
-          <Literal x:TypeArguments="x:Int32" />
+          <Literal x:TypeArguments="x:String">09/08/2022</Literal>
         </Variable.Default>
       </Variable>
-      <Variable x:TypeArguments="sd:DataTable" Name="TamilEnglishDT" />
+      <Variable x:TypeArguments="s:DateTime" Name="dateTimeVar" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Extraction Started" sap:VirtualizedContainerService.HintSize="596,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started extracting english and tamil sentences&quot;]" />
-    <Sequence DisplayName="Data Scraping" sap:VirtualizedContainerService.HintSize="596,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_4">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractedDataTable" />
-      </Sequence.Variables>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser '5000Daily Page'" sap:VirtualizedContainerService.HintSize="510,671.333333333333" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="3d8d76bc743cc2a1824ad89aaa17e7ed" Selector="&lt;html app='chrome.exe' title='5000 Daily use &amp;amp; the most helpful English to Tamil Sentences - English Sentences' /&gt;">
-        <ui:BrowserScope.Body>
-          <ActivityAction x:TypeArguments="x:Object">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
-            </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476,525.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[ExtractedDataTable]" DisplayName="Extract Structured Data 'TABLE'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Column-0' attr='text' /&gt;&lt;column name='Column-1' attr='text' /&gt;&lt;column name='Column-2' attr='text' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="434,106" sap2010:WorkflowViewState.IdRef="ExtractData_1" MaxNumberOfResults="5000" SimulateClick="True">
-                <ui:ExtractData.Target>
-                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="96eabdac-9fd8-43ba-8940-221aa5e7b35f" InformativeScreenshot="dd8106c58068f85f5a4c8b8d82adda88" Selector="&lt;webctrl tag='TABLE' /&gt;" WaitForReady="COMPLETE">
-                    <ui:Target.TimeoutMS>
-                      <InArgument x:TypeArguments="x:Int32" />
-                    </ui:Target.TimeoutMS>
-                  </ui:Target>
-                </ui:ExtractData.Target>
-              </ui:ExtractData>
-              <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="434,287.333333333333" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" WorkbookPath="[in_EnglishTamilSentencesInputExcelPath]">
-                <ui:ExcelApplicationScope.Body>
-                  <ActivityAction x:TypeArguments="ui:WorkbookApplication">
-                    <ActivityAction.Argument>
-                      <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
-                    </ActivityAction.Argument>
-                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,178.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                      <sap:WorkflowViewStateService.ViewState>
-                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        </scg:Dictionary>
-                      </sap:WorkflowViewStateService.ViewState>
-                      <ui:ExcelWriteRange AddHeaders="False" DataTable="[ExtractedDataTable]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="Sheet1">
-                        <ui:ExcelWriteRange.StartingCell>
-                          <InArgument x:TypeArguments="x:String">
-                            <Literal x:TypeArguments="x:String" Value="" />
-                          </InArgument>
-                        </ui:ExcelWriteRange.StartingCell>
-                      </ui:ExcelWriteRange>
-                    </Sequence>
-                  </ActivityAction>
-                </ui:ExcelApplicationScope.Body>
-              </ui:ExcelApplicationScope>
-            </Sequence>
-          </ActivityAction>
-        </ui:BrowserScope.Body>
-      </ui:BrowserScope>
-    </Sequence>
-    <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="596,718.666666666667" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
-      <ueab:ExcelProcessScopeX.Body>
-        <ActivityAction x:TypeArguments="ui:IExcelProcess">
+    <ui:LogMessage DisplayName="Log Message - Extraction Started" sap:VirtualizedContainerService.HintSize="510,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started extracting english and tamil sentences&quot;]" />
+    <uix:NApplicationCard WebDriverMode="{x:Null}" sap2010:Annotation.AnnotationText="Opens english and tamil sentences website and extracts 5000 phrases and write it in the excel" AttachMode="ByInstance" DisplayName="5000 English Sentences Website" sap:VirtualizedContainerService.HintSize="510,882" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="Simulate" ScopeGuid="30d64818-ddec-48cb-a86e-cdcb66735717" Version="V2">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="562,632.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476,620.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="520,540.666666666667" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" WorkbookPath="[in_EnglishTamilSentencesInputExcelPath]">
-              <ueab:ExcelApplicationCard.Body>
-                <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
+            <Delay Duration="00:00:08" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+            <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" sap2010:Annotation.AnnotationText="Extracts 5000 English and tamil phrases" ContinueOnError="True" DataTable="[ExtractedDataTable]" DisplayName="Extract Phrases" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Column-0' attr='text' /&gt;&lt;column name='Column-1' attr='text' /&gt;&lt;column name='Column-2' attr='text' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="434,136.666666666667" sap2010:WorkflowViewState.IdRef="ExtractData_1" MaxNumberOfResults="5000" SimulateClick="True">
+              <ui:ExtractData.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="96eabdac-9fd8-43ba-8940-221aa5e7b35f" InformativeScreenshot="dd8106c58068f85f5a4c8b8d82adda88" Selector="&lt;webctrl tag='TABLE' /&gt;" WaitForReady="COMPLETE">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                </ui:Target>
+              </ui:ExtractData.Target>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ExtractData>
+            <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="434,287.333333333333" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" WorkbookPath="[in_EnglishTamilSentencesInputExcelPath]">
+              <ui:ExcelApplicationScope.Body>
+                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                   <ActivityAction.Argument>
-                    <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
+                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="486,264" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,178.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_5">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ueab:ReadRangeX DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="444,172" sap2010:WorkflowViewState.IdRef="ReadRangeX_1" Range="[Excel.Sheet(&quot;Sheet1&quot;).Range(&quot;&quot;)]" SaveTo="[TamilEnglishDT]" />
+                    <ui:ExcelWriteRange AddHeaders="False" DataTable="[ExtractedDataTable]" DisplayName="Writing 5000 Phrases in Excel" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="Sheet1" StartingCell="A2" />
                   </Sequence>
                 </ActivityAction>
-              </ueab:ExcelApplicationCard.Body>
+              </ui:ExcelApplicationScope.Body>
+            </ui:ExcelApplicationScope>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="-11, -11, 1942, 1030" BrowserType="Chrome" IconBase64="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" InformativeScreenshot="00c4e1313c51ec6ed09e17b33044c398.png" Selector="&lt;html app='chrome.exe' title='5000 Daily use &amp;amp; the most helpful English to Tamil Sentences - English Sentences' /&gt;" Url="[in_EnglishSentencesPageUrl]" />
+      </uix:NApplicationCard.TargetApp>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </uix:NApplicationCard>
+    <ui:ExcelApplicationScope Password="{x:Null}" sap2010:Annotation.AnnotationText="Reading the excel file containing 5000 phrases" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="510,96" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" WorkbookPath="[in_EnglishTamilSentencesInputExcelPath]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1190.66666666667,1760.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_19">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[TamilEnglishDT]" DisplayName="Reading 5000 Phrases" sap:VirtualizedContainerService.HintSize="1148.66666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="Sheet1">
+              <ui:ExcelReadRange.Range>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:ExcelReadRange.Range>
+            </ui:ExcelReadRange>
+            <ui:InterruptibleWhile CurrentIndex="{x:Null}" Condition="[counter &lt; 5000]" DisplayName="While" sap:VirtualizedContainerService.HintSize="1148.66666666667,1570" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
+              <ui:InterruptibleWhile.Body>
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1112,1402" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:MultipleAssign DisplayName="Multiple Assign - Eng Array and Tamil Array" sap:VirtualizedContainerService.HintSize="1070,160.666666666667" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="s:String[]">[TamilSentencesArray]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="s:String[]">[TamilSentencesArray.Concat({TamilEnglishDT.Rows(counter)("Tamil Sentences").ToString}).ToArray]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="s:String[]">[EnglishSentencesArray]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="s:String[]">[EnglishSentencesArray.Concat({TamilEnglishDT.Rows(counter)("English Sentences").ToString}).ToArray]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Int32">[counter]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Int32">[counter + 1]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                  </ui:MultipleAssign>
+                  <If sap2010:Annotation.AnnotationText="If array count equals 5 it will add in queue and reinitialize the array" Condition="[EnglishSentencesArray.Count = 5 And TamilSentencesArray.Count = 5]" DisplayName="If - Checks the Array Count" sap:VirtualizedContainerService.HintSize="1070,1109.33333333333" sap2010:WorkflowViewState.IdRef="If_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="1033.33333333333,889.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If Condition="[DateTime.Parse(referenceDate).DayOfWeek.ToString.Contains(&quot;Sunday&quot;)]" sap:VirtualizedContainerService.HintSize="991.333333333333,627.333333333333" sap2010:WorkflowViewState.IdRef="If_3">
+                          <If.Then>
+                            <Sequence sap:VirtualizedContainerService.HintSize="472.666666666667,222" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="430.666666666667,130" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
+                                <ui:MultipleAssign.AssignOperations>
+                                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_12">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="s:DateTime">[dateTimeVar]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="s:DateTime">[DateTime.Parse(referenceDate).AddDays(1)]</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="x:String">[referenceDate]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="x:String">[dateTimeVar.ToString("MM/dd/yyyy")]</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                  </scg:List>
+                                </ui:MultipleAssign.AssignOperations>
+                              </ui:MultipleAssign>
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <Sequence sap:VirtualizedContainerService.HintSize="472.666666666667,468" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:LogMessage DisplayName="Log Message - Add Queue Started" sap:VirtualizedContainerService.HintSize="430.666666666667,52" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Started adding in queue&quot;]">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:LogMessage>
+                              <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Adding Phrases to the Queue" sap:VirtualizedContainerService.HintSize="430.666666666667,22" sap2010:WorkflowViewState.IdRef="AddQueueItem_2" Priority="Normal" QueueType="[in_QueueName]" Reference="[referenceDate]">
+                                <ui:AddQueueItem.ItemInformation>
+                                  <InArgument x:TypeArguments="x:String" x:Key="Tamil Sentences">[JsonConvert.SerializeObject(EnglishSentencesArray)]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="English Sentences">[JsonConvert.SerializeObject(TamilSentencesArray)]</InArgument>
+                                </ui:AddQueueItem.ItemInformation>
+                              </ui:AddQueueItem>
+                              <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="430.666666666667,130" sap2010:WorkflowViewState.IdRef="MultipleAssign_6">
+                                <ui:MultipleAssign.AssignOperations>
+                                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="s:DateTime">[dateTimeVar]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="s:DateTime">[DateTime.Parse(referenceDate).AddDays(1)]</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="x:String">[referenceDate]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="x:String">[dateTimeVar.ToString("MM/dd/yyyy")]</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                  </scg:List>
+                                </ui:MultipleAssign.AssignOperations>
+                              </ui:MultipleAssign>
+                              <ui:LogMessage DisplayName="Log Message - Add Queue Ended" sap:VirtualizedContainerService.HintSize="430.666666666667,52" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Ended adding in queue&quot;]">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:LogMessage>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                        <ui:MultipleAssign DisplayName="Multiple Assign - Reinitialze Eng Array and Tamil Array" sap:VirtualizedContainerService.HintSize="991.333333333333,130" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
+                          <ui:MultipleAssign.AssignOperations>
+                            <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="s:String[]">[TamilSentencesArray]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="s:String[]">[{}]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="s:String[]">[EnglishSentencesArray]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="s:String[]">[{}]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                            </scg:List>
+                          </ui:MultipleAssign.AssignOperations>
+                        </ui:MultipleAssign>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_17">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </ui:InterruptibleWhile.Body>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-            </ueab:ExcelApplicationCard>
+            </ui:InterruptibleWhile>
           </Sequence>
         </ActivityAction>
-      </ueab:ExcelProcessScopeX.Body>
+      </ui:ExcelApplicationScope.Body>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-    </ueab:ExcelProcessScopeX>
-    <ui:InterruptibleWhile CurrentIndex="{x:Null}" DisplayName="While" sap:VirtualizedContainerService.HintSize="596,937.333333333333" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
-      <ui:InterruptibleWhile.Body>
-        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="552,768" sap2010:WorkflowViewState.IdRef="Sequence_8">
-          <Sequence.Variables>
-            <Variable x:TypeArguments="s:String[]" Name="TamilSentencesArray">
-              <Variable.Default>
-                <mva:VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{}" />
-              </Variable.Default>
-            </Variable>
-            <Variable x:TypeArguments="s:String[]" Name="EnglishSentencesArray">
-              <Variable.Default>
-                <mva:VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{}" />
-              </Variable.Default>
-            </Variable>
-          </Sequence.Variables>
+    </ui:ExcelApplicationScope>
+    <ui:CommentOut sap2010:Annotation.AnnotationText="Excel application scope - read range" DisplayName="Excel Application Scope - Read Range" sap:VirtualizedContainerService.HintSize="510,96" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="242,144" sap2010:WorkflowViewState.IdRef="Sequence_13">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="510,160.666666666667" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
-            <ui:MultipleAssign.AssignOperations>
-              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="s:String[]">[TamilSentencesArray]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="s:String[]">[TamilSentencesArray.Concat({TamilEnglishDT.Rows(counter)("Tamil Sentences").ToString}).ToArray]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="s:String[]">[EnglishSentencesArray]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="s:String[]">[EnglishSentencesArray.Concat({TamilEnglishDT.Rows(counter)("English Sentences").ToString}).ToArray]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:Int32">[counter]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:Int32">[counter + 1]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
-              </scg:List>
-            </ui:MultipleAssign.AssignOperations>
-          </ui:MultipleAssign>
-          <If Condition="[EnglishSentencesArray.Count = 5 And TamilSentencesArray.Count = 5]" sap:VirtualizedContainerService.HintSize="510,475.333333333333" sap2010:WorkflowViewState.IdRef="If_1">
-            <If.Then>
-              <Sequence sap:VirtualizedContainerService.HintSize="473.333333333333,284" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap:VirtualizedContainerService.HintSize="431.333333333333,22" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_QueueName]">
-                  <ui:AddQueueItem.ItemInformation>
-                    <InArgument x:TypeArguments="x:String" x:Key="Tamil Sentences">
-                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="JsonConvert.SerializeObject(EnglishSentencesArray)" />
-                    </InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="English Sentences">
-                      <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="JsonConvert.SerializeObject(TamilSentencesArray)" />
-                    </InArgument>
-                  </ui:AddQueueItem.ItemInformation>
-                </ui:AddQueueItem>
-                <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="431.333333333333,130" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
-                  <ui:MultipleAssign.AssignOperations>
-                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="s:String[]">[TamilSentencesArray]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="s:String[]">[{}]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="s:String[]">[EnglishSentencesArray]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="s:String[]">[{}]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                    </scg:List>
-                  </ui:MultipleAssign.AssignOperations>
-                </ui:MultipleAssign>
-              </Sequence>
-            </If.Then>
-            <If.Else>
-              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_10">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-              </Sequence>
-            </If.Else>
-          </If>
+          <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
+            <ueab:ExcelProcessScopeX.Body>
+              <ActivityAction x:TypeArguments="ui:IExcelProcess">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="562,626.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="520,534.666666666667" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" WorkbookPath="[in_EnglishTamilSentencesInputExcelPath]">
+                    <ueab:ExcelApplicationCard.Body>
+                      <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="486,262" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ueab:ReadRangeX DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="444,170" sap2010:WorkflowViewState.IdRef="ReadRangeX_1" Range="[Excel.Sheet(&quot;Sheet1&quot;).Range(&quot;&quot;)]" SaveTo="[TamilEnglishDT]" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ueab:ExcelApplicationCard.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ueab:ExcelApplicationCard>
+                </Sequence>
+              </ActivityAction>
+            </ueab:ExcelProcessScopeX.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ueab:ExcelProcessScopeX>
         </Sequence>
-      </ui:InterruptibleWhile.Body>
-      <ui:InterruptibleWhile.Condition>
-        <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="counter &lt; 5000" />
-      </ui:InterruptibleWhile.Condition>
-    </ui:InterruptibleWhile>
-    <ui:LogMessage DisplayName="Log Message - Extraction Ended" sap:VirtualizedContainerService.HintSize="596,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Ended extracting english and tamil sentences&quot;]" />
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
+    <ui:LogMessage DisplayName="Log Message - Extraction Ended" sap:VirtualizedContainerService.HintSize="510,93.3333333333333" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Ended extracting english and tamil sentences&quot;]" />
   </Sequence>
 </Activity>
