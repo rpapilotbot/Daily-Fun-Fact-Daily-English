@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1153.33333333333,825.333333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1153.33333333333,932</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="29">
@@ -73,10 +73,9 @@
       <AssemblyReference>NPOI</AssemblyReference>
       <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>System.Data.Entity</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="421.333333333333,760.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="421.333333333333,867.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="str_ThoughtOfTheDay" />
       <Variable x:TypeArguments="x:String" Name="str_JokeOfTheDay" />
@@ -92,65 +91,50 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="379.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Get Daily Facts workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Daily Fun Fact\Get Daily Facts.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Getting Thought of the Day, Joke of the Day, Random Fact of the day" DisplayName="Invoke Get Daily Facts workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,159.333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Daily Fun Fact\Get Daily Facts.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <OutArgument x:TypeArguments="x:String" x:Key="out_ThoughtOfTheDay">[str_ThoughtOfTheDay]</OutArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_JokeOfTheDay">[str_JokeOfTheDay]</OutArgument>
         <OutArgument x:TypeArguments="x:String" x:Key="out_RandomFactOfTheDay">[str_RandomFactOfTheDay]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Building_English_Phrases_DataTable workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Daily Fun Fact\Building_English_Phrases_DataTable.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Building Datatable which contains English and Tamil Sentences" DisplayName="Invoke Building_English_Phrases_DataTable workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,144.666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Daily Fun Fact\Building_English_Phrases_DataTable.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_transactedItem">
-          <mva:VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="in_TransactionItem" />
-        </InArgument>
-        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_PhrasesDT">
-          <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="PhrasesDT" />
-        </OutArgument>
-        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_EnglishDT">
-          <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="EnglishDT" />
-        </OutArgument>
-        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_TamilDT">
-          <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="TamilDT" />
-        </OutArgument>
+        <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_transactedItem">[in_TransactionItem]</InArgument>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_PhrasesDT">[PhrasesDT]</OutArgument>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_EnglishDT">[EnglishDT]</OutArgument>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_TamilDT">[TamilDT]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Send_Email workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Send Email\Send_Email.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Sending Facts and Phrases to the mail" DisplayName="Invoke Send_Email workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,144.666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Send Email\Send_Email.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_PhrasesDT">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="PhrasesDT" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_CredentialName">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;EmailAssetName&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_ToAddress">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;MailToAddress&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_Subject">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;MailSubject&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Int32" x:Key="in_PortNumber">
-          <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="CInt(in_Config(&quot;MailPortNumber&quot;))" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_ServerName">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;MailServerName&quot;).ToString" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_ThoughtOfTheDay">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_ThoughtOfTheDay" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_JokeOfTheDay">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_JokeOfTheDay" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_RandomFactOfTheDay">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_RandomFactOfTheDay" />
-        </InArgument>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_EnglishDT">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="EnglishDT" />
-        </InArgument>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_TamilDT">
-          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="TamilDT" />
-        </InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_PhrasesDT">[PhrasesDT]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_CredentialName">[in_Config("EmailAssetName").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ToAddress">[in_Config("MailToAddress").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Subject">[in_Config("MailSubject").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_PortNumber">[CInt(in_Config("MailPortNumber"))]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ServerName">[in_Config("MailServerName").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ThoughtOfTheDay">[str_ThoughtOfTheDay]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_JokeOfTheDay">[str_JokeOfTheDay]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_RandomFactOfTheDay">[str_RandomFactOfTheDay]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_EnglishDT">[EnglishDT]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_TamilDT">[TamilDT]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:InvokeWorkflowFile>
   </Sequence>
 </Activity>
